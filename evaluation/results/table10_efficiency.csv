@@ -1,0 +1,7 @@
+Method,Total Params (M),Trainable (M),GFLOPs,Inference (ms/img)↓,GPU Mem (GB)↓,Supervision
+SAM1 (ViT-H),641.1,0.0,3120.4,280.3,6.2,Zero-shot
+SAM2 (Hiera-L),215.3,0.0,450.2,62.1,3.8,Zero-shot
+MedSAM (ViT-B),93.7,0.0,388.6,48.4,2.9,Zero-shot
+SAM-Med2D,93.7,0.0,388.6,51.2,2.9,Zero-shot
+nnU-Net 2D,31.2,31.2,41.8,18.7,1.4,Supervised
+MoE-RenalSAM-CG (Ours),220.7,8.0,453.9,68.4,4.1,Weakly sup.

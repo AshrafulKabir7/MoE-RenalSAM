@@ -1,0 +1,59 @@
+paths:
+  kaggle_raw:       data/raw/kaggle
+  renseg_raw:       data/raw/renseg
+  renseg_masks:     data/processed/renseg_masks
+  pseudo_gt:        data/processed/pseudo_gt
+  pseudo_boxes:     data/processed/pseudo_boxes
+  reports:          data/processed/reports
+  splits:           data/splits
+  checkpoints:      training/checkpoints
+  results:          evaluation/results
+  sam2_checkpoint:  weights/sam2_hiera_large.pt
+
+classes:
+  - Normal
+  - Tumor
+  - Stone
+
+preprocessing:
+  image_size:           512
+  red_dominance:        60
+  red_min:              100
+  points_per_side:      32
+  pseudo_iou_thresh:    0.85
+  pseudo_stability:     0.90
+  stone_area_min:       50
+  stone_area_max:       5000
+  tumor_area_min:       200
+  tumor_area_max_frac:  0.40
+
+splits:
+  train: 0.70
+  val:   0.10
+  test:  0.20
+  seed:  42
+
+training:
+  epochs:        300
+  batch_size:    8
+  lr_lora:       1.0e-4
+  lr_decoder:    1.0e-3
+  weight_decay:  1.0e-4
+  warmup_epochs: 10
+  grad_clip:     1.0
+
+model:
+  lora_rank:           16
+  num_experts:         4
+  top_k_experts:       2
+  expert_hidden:       512
+  load_balance_alpha:  0.01
+
+loss:
+  lambda_bce:     1.0
+  lambda_dice:    1.0
+  lambda_chamfer: 0.5
+  lambda_spline:  0.1
+
+evaluation:
+  significance_alpha: 0.05

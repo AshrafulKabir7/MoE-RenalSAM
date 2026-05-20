@@ -1,0 +1,39 @@
+# Python Caches & Compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Large Model Weights and Checkpoints (Strictly local)
+weights/
+checkpoints/
+*.pth
+*.pt
+*.bin
+*.onnx
+
+# Data Directories
+# We ignore raw and processed images/masks to keep the repo clean and lightweight.
+# However, we DO commit the splits (data/splits/) because they contain the CSV manifests
+# required to run the evaluation and training notebooks.
+data/raw/
+data/processed/
+
+# IDE and System Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temporary Logs and Scratch Files
+*.log
+pdf_text.txt
+temp.txt

@@ -1,0 +1,5 @@
+method,class,n,dice_mean,dice_std,iou_mean,iou_std,hd95_mean,hd95_std,precision_mean,precision_std,recall_mean,recall_std,f1_mean,f1_std
+SLIC+GrabCut,Normal,1016,1.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0
+SLIC+GrabCut,Tumor,457,0.0231,0.1052,0.016,0.0818,338.6789,178.5575,0.0163,0.0839,0.0713,0.2498,0.0231,0.1052
+SLIC+GrabCut,Stone,276,0.0085,0.0199,0.0044,0.0105,131.8824,59.6738,0.0044,0.0108,0.7883,0.3879,0.0085,0.0199
+SLIC+GrabCut,MACRO,1749,0.3439,—,0.3401,—,156.8538,—,0.3402,—,0.6199,—,0.3439,—

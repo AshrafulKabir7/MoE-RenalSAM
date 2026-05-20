@@ -1,0 +1,42 @@
+{
+  "img_size": 512,
+  "sam_img_size": 512,
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "num_experts": 4,
+  "top_k_experts": 2,
+  "expert_hidden": 512,
+  "load_balance_alpha": 0.01,
+  "apg_channels": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "lambda_bbox_seg": 3.0,
+  "lambda_outside": 2.0,
+  "lambda_smoothness": 0.3,
+  "lambda_area": 0.5,
+  "lambda_bbox_reg": 2.0,
+  "class_weights": {
+    "Normal": 1.0,
+    "Tumor": 3.0,
+    "Stone": 4.0
+  },
+  "epochs": 300,
+  "batch_size": 8,
+  "lr_lora": 0.0001,
+  "lr_decoder": 0.001,
+  "lr_apg": 0.0005,
+  "weight_decay": 0.0001,
+  "warmup_epochs": 10,
+  "min_lr": 1e-06,
+  "grad_clip": 1.0,
+  "val_every": 5,
+  "save_every": 25,
+  "patience": 50,
+  "num_workers": 0,
+  "pin_memory": true,
+  "pixel_spacing_mm": 0.5
+}

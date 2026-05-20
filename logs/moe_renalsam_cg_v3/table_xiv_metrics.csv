@@ -1,0 +1,4 @@
+Method,Class,IoU,Precision,Recall,Dice,Accuracy,Specificity,BalancedAcc,MCC,HD95,ASSD
+MoE-RenalSAM-CG,Normal (Avg),0.9921,0.9921,0.9921,0.9921,1.0,1.0,0.9961,0.9921,2.8507,2.8507
+MoE-RenalSAM-CG,Carcinoma (Avg),0.8051,0.8544,0.9229,0.8797,0.9955,0.9965,0.9597,0.9253,3.7681,2.0395
+MoE-RenalSAM-CG,Calculi (Avg),0.4919,0.5436,0.8472,0.6342,0.9996,0.9997,0.9234,0.6621,9.3918,3.7922

@@ -1,0 +1,5 @@
+Class,Train,Val,Test,Total
+Normal,3553,508,1016,5077
+Tumor,1597,229,457,2283
+Stone,963,138,276,1377
+Total,6113,875,1749,8737

@@ -1,0 +1,8 @@
+Model,Supervision,Normal Dice,Tumor Dice,Stone Dice,Macro Dice,Macro IoU,Macro HD95↓,Macro F1
+SAM1,Zero-shot,1.000,0.729,0.467,0.732,0.673,16.86,0.732
+SAM2,Zero-shot,1.000,0.683,0.299,0.661,0.615,20.31,0.661
+MedSAM,Zero-shot,1.000,0.000,0.000,0.333,0.333,300.89,0.333
+HQ-SAM,Zero-shot,1.000,0.690,0.445,0.712,0.655,17.79,0.712
+SAM-Med2D,Zero-shot,0.789,0.231,0.179,0.400,0.000,0.00,0.000
+nnU-Net,Supervised (pseudo),0.891,0.117,0.030,0.346,0.000,0.00,0.000
+MoE-RenalSAM-CG,Weakly supervised,1.000,0.882,0.841,0.908,0.838,5.22,0.908

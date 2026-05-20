@@ -1,0 +1,4 @@
+Class,N,Method,Mean Dice,Std Dice,Notes
+Normal,N/A,Zero mask,1.000,0.000,No pathology; pseudo = zeros
+Tumor,1597,SAM2 bbox-prompted,0.900,0.080,SAM2 oracle
+Stone,963,ASD (Adaptive Skeleton Dilation),0.926,0.045,Otsu + Dilation

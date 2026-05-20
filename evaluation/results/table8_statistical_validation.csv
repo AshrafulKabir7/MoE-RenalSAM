@@ -1,0 +1,10 @@
+Model,Class,Mean Dice,95% CI,T-Statistic,p-value,Significance
+SAM2,Normal,0.9987,±0.0014,0.00,1.0000,ref
+SAM2,Tumor,0.6736,±0.0065,0.00,1.0000,ref
+SAM2,Stone,0.2959,±0.0070,0.00,1.0000,ref
+nnU-Net,Normal,0.8873,±0.0098,-17.53,0.0000,***
+nnU-Net,Tumor,0.1194,±0.0061,-127.98,0.0000,***
+nnU-Net,Stone,0.0296,±0.0114,-44.41,0.0000,***
+MoE-RenalSAM-CG,Normal,0.9975,±0.0027,0.86,0.4132,ns
+MoE-RenalSAM-CG,Tumor,0.8830,±0.0069,28.15,0.0000,***
+MoE-RenalSAM-CG,Stone,0.8382,±0.0057,127.51,0.0000,***

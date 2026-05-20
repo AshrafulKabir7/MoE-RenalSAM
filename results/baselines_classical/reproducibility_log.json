@@ -1,0 +1,16 @@
+{
+  "python": "3.11.15",
+  "numpy": "2.4.3",
+  "opencv": "4.13.0",
+  "scikit_learn": "1.8.0",
+  "scikit_image": "0.26.0",
+  "scipy": "1.17.1",
+  "seed": 42,
+  "pixel_spacing_mm": 0.5,
+  "test_images": 1749,
+  "classes": [
+    "Normal",
+    "Tumor",
+    "Stone"
+  ]
+}

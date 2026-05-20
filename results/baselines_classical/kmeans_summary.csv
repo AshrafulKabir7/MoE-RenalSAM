@@ -1,0 +1,5 @@
+method,class,n,dice_mean,dice_std,iou_mean,iou_std,hd95_mean,hd95_std,precision_mean,precision_std,recall_mean,recall_std,f1_mean,f1_std
+K-Means,Normal,1016,1.0,0.0,1.0,0.0,0.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0
+K-Means,Tumor,457,0.0864,0.1591,0.0538,0.1041,84.2197,47.7124,0.1012,0.2153,0.0932,0.1588,0.0864,0.1591
+K-Means,Stone,276,0.0384,0.05,0.0203,0.0276,150.5058,63.0783,0.0203,0.0277,0.7506,0.3465,0.0384,0.05
+K-Means,MACRO,1749,0.3749,—,0.358,—,78.2418,—,0.3738,—,0.6146,—,0.3749,—

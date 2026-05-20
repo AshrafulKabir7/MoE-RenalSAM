@@ -1,0 +1,37 @@
+{
+  "notebook": "02_create_splits",
+  "total": 8737,
+  "seed": 42,
+  "ratios": {
+    "train": 0.7,
+    "val": 0.1,
+    "test": 0.2
+  },
+  "counts": {
+    "Normal": {
+      "train": 3553,
+      "val": 508,
+      "test": 1016
+    },
+    "Tumor": {
+      "train": 1597,
+      "val": 229,
+      "test": 457
+    },
+    "Stone": {
+      "train": 963,
+      "val": 138,
+      "test": 276
+    }
+  },
+  "totals": {
+    "train": 6113,
+    "val": 875,
+    "test": 1749
+  },
+  "manifests": [
+    "data\\splits\\train_manifest.csv",
+    "data\\splits\\val_manifest.csv",
+    "data\\splits\\test_manifest.csv"
+  ]
+}

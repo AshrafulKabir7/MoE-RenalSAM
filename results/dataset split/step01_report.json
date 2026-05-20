@@ -1,0 +1,34 @@
+{
+  "notebook": "01_dataset_and_mask_extraction",
+  "kaggle_counts": {
+    "Normal": 5077,
+    "Tumor": 2283,
+    "Stone": 1377
+  },
+  "renseg_counts": {
+    "Normal": 5077,
+    "Tumor": 2283,
+    "Stone": 1377
+  },
+  "mask_stats": {
+    "Normal": {
+      "total": 5077,
+      "with_annotation": 0,
+      "empty_mask": 5077,
+      "skipped_existing": 0
+    },
+    "Tumor": {
+      "total": 2283,
+      "with_annotation": 2283,
+      "empty_mask": 0,
+      "skipped_existing": 0
+    },
+    "Stone": {
+      "total": 1377,
+      "with_annotation": 1376,
+      "empty_mask": 1,
+      "skipped_existing": 0
+    }
+  },
+  "masks_output": "D:\\MoE-RenalSAM-CG\\MoE-RenalSAM-CG\\data\\processed\\renseg_masks"
+}

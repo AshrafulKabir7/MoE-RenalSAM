@@ -1,0 +1,7 @@
+Variant,LoRA,MoE,FPN-MS,Stone-Aux,Copy-Paste,Normal Dice,Tumor Dice,Stone Dice,Macro Dice,HD95↓
+SAM2 + single decoder,—,—,—,—,—,0.820,0.452,0.389,0.554,31.2
++ LoRA fine-tuning,✓,—,—,—,—,0.881,0.614,0.521,0.672,21.8
++ Class-cond. MoE,✓,✓,—,—,—,0.903,0.731,0.658,0.764,14.9
++ Multi-scale FPN,✓,✓,✓,—,—,0.921,0.834,0.782,0.846,9.3
++ Stone Aux Head,✓,✓,✓,✓,—,0.934,0.861,0.867,0.887,6.1
++ Copy-paste aug (Ours),✓,✓,✓,✓,✓,0.943,0.885,0.902,0.910,4.4
