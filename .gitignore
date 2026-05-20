@@ -37,3 +37,11 @@ Thumbs.db
 *.log
 pdf_text.txt
 temp.txt
+scratch_train_code.py
+
+# Local Research Directories (Not uploaded to GitHub)
+ablation/
+paper_figures/
+training/
+xai/
+preprocessing/
