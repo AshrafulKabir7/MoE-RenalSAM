@@ -366,7 +366,6 @@ else:
     print("Training history CSV not found.")
 """))
 
-
 cells.append(nbf.v4.new_markdown_cell("## 4. Model Application & Side-by-Side Comparison\nComparing the un-finetuned SAM2 base model directly against our trained MoE-RenalSAM-CG model visually."))
 
 cells.append(nbf.v4.new_code_cell("""import gc
@@ -531,39 +530,7 @@ if val_manifest.exists():
         compare_all_models_on_image(stem, 'Stone')
 """))
 
-
-cells.append(nbf.v4.new_markdown_cell("## 5. Comprehensive Qualitative Comparison\nA full visual side-by-side of all foundation models (SAM1, SAM2, MedSAM, HQ-SAM) alongside our MoE-RenalSAM-CG model."))
-
-cells.append(nbf.v4.new_code_cell("""full_qualitative_img = PROJECT_ROOT / 'results' / 'custom model' / 'qualitative_results_publication.png'
-if full_qualitative_img.exists():
-    img = Image.open(full_qualitative_img)
-    plt.figure(figsize=(20, 60))
-    plt.imshow(img)
-    plt.axis('off')
-    plt.tight_layout()
-    plt.show()
-else:
-    print("Full qualitative comparison image not found at:", full_qualitative_img)
-"""))
-
-cells.append(nbf.v4.new_code_cell("""# Qualitative Comparison for Classical Baselines
-classical_dir = PROJECT_ROOT / 'results' / 'baselines_classical'
-galleries = ['gallery_tumor.png', 'gallery_stone.png', 'gallery_normal.png']
-
-print("### Classical Baselines Qualitative Results ###")
-for g in galleries:
-    img_path = classical_dir / g
-    if img_path.exists():
-        img = Image.open(img_path)
-        plt.figure(figsize=(20, 10))
-        plt.imshow(img)
-        plt.title(f"Classical Baselines: {g.split('_')[1].split('.')[0].capitalize()} Images", fontsize=16, fontweight='bold')
-        plt.axis('off')
-        plt.tight_layout()
-        plt.show()
-"""))
-
-cells.append(nbf.v4.new_markdown_cell("## 6. Confusion Matrix (APG Classification)\nTo parallel classical diagnosis methodologies, we evaluate our Auxiliary Proposal Generator (APG) branch which acts as an image-level classifier determining the presence of lesions."))
+cells.append(nbf.v4.new_markdown_cell("## 5. Confusion Matrix (APG Classification)\nTo parallel classical diagnosis methodologies, we evaluate our Auxiliary Proposal Generator (APG) branch which acts as an image-level classifier determining the presence of lesions."))
 
 cells.append(nbf.v4.new_code_cell("""from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
@@ -695,6 +662,160 @@ if val_manifest.exists():
     visualize_expert_routing([n_stem, t_stem, s_stem], ['Normal', 'Tumor', 'Stone'])
 """))
 
+cells.append(nbf.v4.new_markdown_cell("## 7. Architectural Ablation Study (Component Analysis)\nAn architectural ablation analysis proving the quantitative impact of each added configuration. We inspect how Macro Dice increases while HD95 boundary error distance decreases progressively as structural modifications are integrated."))
+
+cells.append(nbf.v4.new_code_cell("""ablation_file = PROJECT_ROOT / 'evaluation' / 'results' / 'table9_ablation.csv'
+if ablation_file.exists():
+    df_ab = pd.read_csv(ablation_file)
+    print("### Progressive Ablation Analysis Table ###")
+    display(df_ab)
+    
+    # Dual-axis plot
+    fig, ax1 = plt.subplots(figsize=(12, 6))
+    
+    # Left axis: Macro Dice
+    color1 = '#2c3e50'
+    ax1.set_xlabel('Network Configuration Variants', fontweight='bold', labelpad=10)
+    ax1.set_ylabel('Macro Dice Score (%)', color='#1f77b4', fontweight='bold')
+    
+    dices = df_ab['Macro Dice'].astype(float) * 100
+    bars = ax1.bar(df_ab['Variant'], dices, color='#1f77b4', alpha=0.6, width=0.4, label='Macro Dice (%)')
+    ax1.tick_params(axis='y', labelcolor='#1f77b4')
+    ax1.set_ylim(40, 100)
+    ax1.set_xticklabels(df_ab['Variant'], rotation=15, ha='right')
+    
+    # Right axis: HD95
+    ax2 = ax1.twinx()
+    color2 = '#d62728'
+    ax2.set_ylabel('HD95 Boundary Distance (mm) ↓ [Lower is Better]', color=color2, fontweight='bold')
+    hd95s = df_ab['HD95↓'].astype(float)
+    line = ax2.plot(df_ab['Variant'], hd95s, color=color2, marker='o', linewidth=2.5, markersize=8, label='HD95 (mm)')
+    ax2.tick_params(axis='y', labelcolor=color2)
+    ax2.set_ylim(0, 35)
+    
+    plt.title('Ablation Study: Progressive Architectural Impact on Accuracy vs. Boundary Error', fontweight='bold', pad=15, fontsize=14)
+    fig.tight_layout()
+    plt.show()
+else:
+    print("Ablation study CSV not found.")
+"""))
+
+cells.append(nbf.v4.new_markdown_cell("## 8. Statistical Validation & Confidence Intervals\nTo validate that our model performs significantly better than foundation models and traditional benchmarks, we calculate the paired t-statistics and report the **95% Confidence Intervals** across classes."))
+
+cells.append(nbf.v4.new_code_cell("""stats_file = PROJECT_ROOT / 'evaluation' / 'results' / 'table8_statistical_validation.csv'
+if stats_file.exists():
+    df_st = pd.read_csv(stats_file)
+    print("### Statistical Significance Benchmarking ###")
+    display(df_st)
+    
+    plt.figure(figsize=(10, 6))
+    
+    # Extract confidence intervals (e.g. "±0.0027" -> 0.0027)
+    df_st['CI_val'] = df_st['95% CI'].str.replace('±', '').astype(float)
+    
+    classes = df_st['Class'].unique()
+    models = df_st['Model'].unique()
+    
+    x = np.arange(len(classes))
+    width = 0.25
+    
+    # Plotting each model side-by-side with error bars representing 95% Confidence Interval
+    for i, m in enumerate(models):
+        m_data = df_st[df_st['Model'] == m]
+        # Align with classes order
+        dices = [m_data[m_data['Class'] == c]['Mean Dice'].values[0]*100 for c in classes]
+        cis = [m_data[m_data['Class'] == c]['CI_val'].values[0]*100 for c in classes]
+        plt.bar(x + i*width - width/2 - width/4, dices, width, yerr=cis, capsize=5, label=m, alpha=0.8, edgecolor='black')
+        
+    plt.xticks(x, classes)
+    plt.title('Statistical Performance Benchmarking (with 95% Confidence Intervals)', fontweight='bold', pad=15)
+    plt.ylabel('Mean Dice Score (%)')
+    plt.ylim(0, 110)
+    plt.legend()
+    plt.grid(axis='y', linestyle='--', alpha=0.5)
+    plt.show()
+else:
+    print("Statistical validation CSV not found.")
+"""))
+
+cells.append(nbf.v4.new_markdown_cell("## 9. Computational Efficiency & Pareto Pareto Profile\nIn medical diagnostic applications, parameter count and inference speed are critical factors. We visualize the Pareto Front showing how **MoE-RenalSAM-CG** compares to baselines across parameters, GFLOPs, and latency."))
+
+cells.append(nbf.v4.new_code_cell("""eff_file = PROJECT_ROOT / 'evaluation' / 'results' / 'table10_efficiency.csv'
+if eff_file.exists():
+    df_eff = pd.read_csv(eff_file)
+    print("### Computational Efficiency & Pareto Front Analysis ###")
+    display(df_eff)
+    
+    plt.figure(figsize=(10, 6))
+    
+    x_val = df_eff['Total Params (M)'].astype(float)
+    y_val = df_eff['Inference (ms/img)↓'].astype(float)
+    sizes = df_eff['GFLOPs'].astype(float)
+    
+    color_map = {
+        'Zero-shot': '#2ca02c',
+        'Supervised': '#1f77b4',
+        'Weakly sup.': '#ff7f0e'
+    }
+    colors = df_eff['Supervision'].map(color_map).fillna('#7f7f7f')
+    
+    scatter = plt.scatter(x_val, y_val, s=sizes*0.5, c=colors, alpha=0.7, edgecolors='black', linewidth=1.5)
+    
+    # Annotate markers
+    for i, row in df_eff.iterrows():
+        plt.annotate(row['Method'], (x_val[i], y_val[i]), xytext=(10, 5), textcoords='offset points', fontsize=10, fontweight='bold')
+        
+    plt.title('Pareto Front: Speed vs. Model Parameters (Bubble Area ∝ GFLOPs)', fontweight='bold', pad=15, fontsize=14)
+    plt.xlabel('Total Parameters (Millions)', fontweight='bold')
+    plt.ylabel('Inference Latency (ms per Image) [Lower is Better] ↓', fontweight='bold')
+    plt.xlim(-50, 750)
+    plt.ylim(0, 320)
+    
+    legend_elements = [
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='#2ca02c', markersize=12, label='Zero-shot Baselines'),
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='#1f77b4', markersize=12, label='Fully Supervised'),
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='#ff7f0e', markersize=12, label='MoE-RenalSAM-CG (Ours)')
+    ]
+    plt.legend(handles=legend_elements, loc='upper left')
+    plt.grid(True, linestyle=':', alpha=0.6)
+    plt.show()
+else:
+    print("Efficiency CSV not found.")
+"""))
+
+cells.append(nbf.v4.new_markdown_cell("## 10. Optimal Decision Threshold Sweep\nWe sweep through multiple prediction probability thresholds (`[0.3, 0.4, 0.45, 0.5]`) for all target classes (Normal, Tumor, Stone) to locate the optimal segmentation decision boundaries."))
+
+cells.append(nbf.v4.new_code_cell("""sweep_file = PROJECT_ROOT / 'evaluation' / 'results' / 'table11_threshold_sweep.csv'
+if sweep_file.exists():
+    df_sw = pd.read_csv(sweep_file)
+    print("### Optimal Decision Threshold Table ###")
+    display(df_sw)
+    
+    plt.figure(figsize=(14, 5))
+    classes = df_sw['Class'].unique()
+    
+    for i, cls in enumerate(classes):
+        plt.subplot(1, 3, i+1)
+        cls_data = df_sw[df_sw['Class'] == cls]
+        
+        plt.plot(cls_data['Threshold'], cls_data['Dice']*100, label='Dice (%)', marker='o', linewidth=2)
+        plt.plot(cls_data['Threshold'], cls_data['Precision']*100, label='Precision (%)', marker='s', linewidth=1.5, linestyle='--')
+        plt.plot(cls_data['Threshold'], cls_data['Recall']*100, label='Recall (%)', marker='^', linewidth=1.5, linestyle='-.')
+        
+        plt.title(f'{cls} Class Sweep')
+        plt.xlabel('Probability Threshold')
+        plt.ylabel('Metric Score (%)')
+        plt.xticks([0.3, 0.4, 0.45, 0.5])
+        plt.ylim(75, 101)
+        plt.legend(fontsize=9)
+        plt.grid(alpha=0.3)
+        
+    plt.suptitle('Optimization Curves: Segmentation Metrics over Probability Thresholds', fontweight='bold', y=1.02, fontsize=14)
+    plt.tight_layout()
+    plt.show()
+else:
+    print("Threshold sweep CSV not found.")
+"""))
 
 nb['cells'] = cells
 
